@@ -251,7 +251,7 @@ shinyServer(function(input, output) {
 
   output$downloadReport <- downloadHandler(
     filename = function() {
-      paste('AdaboostReport', sep = '.', switch(
+      paste('Self-Training NaiveBayesReport', sep = '.', switch(
         input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
       ))
     },
@@ -275,9 +275,9 @@ plot_gg_Cumulative_curve()
 plot_gg_roc_curve()
 plot_gg_lift_curve()
 plot_grid()
-```       ',file='naiveBayesReport.Rmd',append=F)
+```       ',file='Self-Training NaiveBayesReport.Rmd',append=F)
 
-      out <- render('naiveBayesReport.Rmd', switch(
+      out <- render('Self-Training NaiveBayesReport.Rmd', switch(
         input$format,
         PDF = pdf_document(), HTML = html_document(), Word = word_document()
       ))
