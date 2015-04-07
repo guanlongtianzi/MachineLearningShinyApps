@@ -29,5 +29,5 @@ if(!require(knitr)) {
   install.packages(pkgs = 'knitr',quiet = TRUE)
   require(knitr)
 }
-runGitHub(username = 'guanlongtianzi',repo = 'shinyOfBagging') 
+runGitHub(username = 'guanlongtianzi',repo = 'MachineLearningShinyApps',subdir ='Bagging') 
 ```
