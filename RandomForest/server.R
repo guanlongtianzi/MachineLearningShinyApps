@@ -1,6 +1,6 @@
 options(shiny.maxRequestSize=30*1024^2)
 
-if(getRversion() >= "2.15.1") utils::globalVariables(c('margin_plot', 'randomForest_plot', 'rand_model','margin','model_list','gg_pr_Curve','gg_Cumulative_curve','gg_roc_curve','gg_lift_curve'))
+if(getRversion() >= "2.15.1") utils::globalVariables(c('margin_plot','randomForest_plot','rand_model','margin','model_list','gg_pr_Curve','gg_Cumulative_curve','gg_roc_curve','gg_lift_curve','plot_randomForest','plot_margin','plot_gg_pr_Curve','plot_gg_Cumulative_curve','plot_gg_roc_curve','plot_gg_lift_curve','plot_grid'))
 
 shinyServer(function(input, output) {
 
@@ -149,7 +149,7 @@ shinyServer(function(input, output) {
     }
   })
 
-  plot_margin <- function(){
+  plot_margin <<- function(){
     print(margin_plot)
   }
 
@@ -213,7 +213,9 @@ summary(rand_model)
 ```
 ```{r,echo=T,prompt=T}
 model_list
+
 plot_randomForest()
+
 plot_margin()
 plot_gg_pr_Curve()
 plot_gg_Cumulative_curve()
@@ -412,19 +414,19 @@ plot_grid()
     grid.arrange(gg_pr_Curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='Adaboost')
   })
 
-  plot_gg_pr_Curve <- function(){
+  plot_gg_pr_Curve <<- function(){
     print(gg_pr_Curve)
   }
-  plot_gg_Cumulative_curve <- function(){
+  plot_gg_Cumulative_curve <<- function(){
     print(gg_Cumulative_curve)
   }
-  plot_gg_roc_curve <- function(){
+  plot_gg_roc_curve <<- function(){
     print(gg_roc_curve)
   }
-  plot_gg_lift_curve <- function(){
+  plot_gg_lift_curve <<- function(){
     print(gg_lift_curve)
   }
-  plot_grid <- function(){
+  plot_grid <<- function(){
     grid.arrange(gg_pr_Curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='RndomForest')
   }
 
