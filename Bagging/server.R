@@ -1,6 +1,6 @@
 options(shiny.maxRequestSize=30*1024^2)
 
-if(getRversion() >= "2.15.1") utils::globalVariables(c('bag_model','gg_pr_Curve','gg_Cumulative_curve','gg_roc_curve','gg_lift_curve'))
+if(getRversion() >= "2.15.1") utils::globalVariables(c('bag_model','gg_pr_curve','gg_Cumulative_curve','gg_roc_curve','gg_lift_curve'))
 
 shinyServer(function(input, output) {
 
@@ -105,15 +105,15 @@ shinyServer(function(input, output) {
 
     names(pr_Curve_data) <- c('x','y')
 
-    gg_pr_Curve  <<- ggplot(data=pr_Curve_data,mapping=aes(x=x,y=y))
+    gg_pr_curve  <<- ggplot(data=pr_Curve_data,mapping=aes(x=x,y=y))
 
-    gg_pr_Curve <<- gg_pr_Curve + geom_line(colour=I('steelblue'),size=I(1.1))
+    gg_pr_curve <<- gg_pr_curve + geom_line(colour=I('steelblue'),size=I(1.1))
 
-    gg_pr_Curve <<- gg_pr_Curve+labs(x='Recall',y='Precision',title='Precision/Recall Curve')
+    gg_pr_curve <<- gg_pr_curve+labs(x='Recall',y='Precision',title='Precision/Recall Curve')
 
-    gg_pr_Curve <<- gg_pr_Curve+theme(plot.title=element_text(size=15,face='bold'),axis.title.x=element_text(size=15),axis.title.y=element_text(size=15))
+    gg_pr_curve <<- gg_pr_curve+theme(plot.title=element_text(size=15,face='bold'),axis.title.x=element_text(size=15),axis.title.y=element_text(size=15))
 
-    print(gg_pr_Curve)
+    print(gg_pr_curve)
   })
 
   output$Cumulative_curve <- renderPlot({
@@ -293,7 +293,7 @@ shinyServer(function(input, output) {
   output$grid <- renderPlot({
     require(gridExtra)
 
-    grid.arrange(gg_pr_Curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='Adaboost')
+    grid.arrange(gg_pr_curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='Adaboost')
   })
 
   output$downloadReport <- downloadHandler(
@@ -317,7 +317,7 @@ When you click the **Knit** button a document will be generated that includes bo
 summary(bag_model)
 ```
 ```{r,echo=T,prompt=T}
-plot_gg_pr_Curve()
+plot_gg_pr_curve()
 plot_gg_Cumulative_curve()
 plot_gg_roc_curve()
 plot_gg_lift_curve()
@@ -332,8 +332,8 @@ plot_grid()
     }
   )
 
-  plot_gg_pr_Curve <- function(){
-    print(gg_pr_Curve)
+  plot_gg_pr_curve <- function(){
+    print(gg_pr_curve)
   }
 
   plot_gg_Cumulative_curve <- function(){
@@ -349,7 +349,7 @@ plot_grid()
   }
 
   plot_grid <- function(){
-    grid.arrange(gg_pr_Curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='Bagging')
+    grid.arrange(gg_pr_curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='Bagging')
   }
 
   output$downloadData1 = downloadHandler(
@@ -358,7 +358,7 @@ plot_grid()
     },
     content = function(file) {
       jpeg(file)
-      plot_gg_pr_Curve()
+      plot_gg_pr_curve()
       dev.off()
     },
     contentType='image/jpg')
@@ -369,7 +369,7 @@ plot_grid()
     },
     content = function(file) {
       png(file)
-      plot_gg_pr_Curve()
+      plot_gg_pr_curve()
       dev.off()
     },
     contentType='image/png')
@@ -380,7 +380,7 @@ plot_grid()
     },
     content = function(file) {
       pdf(file)
-      plot_gg_pr_Curve()
+      plot_gg_pr_curve()
       dev.off()
     },
     contentType='image/pdf')
