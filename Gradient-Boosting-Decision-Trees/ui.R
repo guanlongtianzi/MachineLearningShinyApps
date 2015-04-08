@@ -1,5 +1,5 @@
 shinyUI(bootstrapPage(fluidPage(
-  titlePanel("GBM"),
+  titlePanel("Gradient Boosted Decision Trees"),
   conditionalPanel(condition="$('html').hasClass('shiny-busy')",tags$div("Loading...",id="loadmessage")),
   sidebarLayout(
     sidebarPanel(
@@ -14,10 +14,9 @@ shinyUI(bootstrapPage(fluidPage(
       ),
 
       wellPanel(
-        div(align="center",checkboxInput("adaboost_param","Show adaboost parameters",FALSE)),
-        conditionalPanel(condition = "input.adaboost_param==true",
-                         div(align="center",selectInput(inputId = 'type',label = tags$div('type',style='color:blue'),choices = c('Classification','Regression'))),
-                         div(align="center",numericInput(inputId = "ntree", label = tags$div('ntree',style='color:blue'), NA))
+        div(align="center",checkboxInput("gbm_param","Show gbm parameters",FALSE)),
+        conditionalPanel(condition = "input.gbm_param==true",
+                         div(align="center",selectInput(inputId = 'type',label = tags$div('type',style='color:blue'),choices = c('Classification','Regression')))
         )
       ),
 
