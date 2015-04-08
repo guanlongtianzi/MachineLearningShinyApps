@@ -1,6 +1,6 @@
 options(shiny.maxRequestSize=30*1024^2)
 
-if(getRversion() >= "2.15.1") utils::globalVariables(c('bst','gg_pr_Curve','gg_Cumulative_curve','gg_roc_curve','gg_lift_curve','sparse_matrix','sparse_matrix_pre','sparse_matrix_all','output_vector'))
+if(getRversion() >= "2.15.1") utils::globalVariables(c('bst','gg_pr_Curve','gg_Cumulative_curve','gg_roc_curve','gg_lift_curve','sparse_matrix','sparse_matrix_pre','sparse_matrix_all','output_vector','plot_gg_pr_Curve','plot_gg_Cumulative_curve','plot_gg_roc_curve','plot_gg_lift_curve','plot_grid'))
 
 shinyServer(function(input, output) {
 
@@ -129,8 +129,6 @@ shinyServer(function(input, output) {
     ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Cumulative_curve <- performance(pred,'rec','rpp')
 
-    plot(Cumulative_curve)
-
     Cumulative_curve_data <- data.frame(as.data.frame(Cumulative_curve@x.values),as.data.frame(Cumulative_curve@y.values),row.names = NULL)
 
     names(Cumulative_curve_data) <- c('x','y')
@@ -182,8 +180,6 @@ shinyServer(function(input, output) {
     ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     roc_curve <- performance(pred,'tpr','fpr')
 
-    plot(roc_curve)
-
     roc_curve_data <- data.frame(as.data.frame(roc_curve@x.values),as.data.frame(roc_curve@y.values),row.names = NULL)
 
     names(roc_curve_data) <- c('x','y')
@@ -230,8 +226,6 @@ shinyServer(function(input, output) {
     ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     lift_curve <- performance(pred,'lift','rpp')
 
-    plot(lift_curve)
-
     lift_curve_data <- data.frame(as.data.frame(lift_curve@x.values),as.data.frame(lift_curve@y.values),row.names = NULL)
 
     names(lift_curve_data) <- c('x','y')
@@ -252,9 +246,29 @@ shinyServer(function(input, output) {
     grid.arrange(gg_pr_Curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='GBM')
   })
 
+  plot_gg_pr_Curve <<- function(){
+    print(gg_pr_Curve)
+  }
+
+  plot_gg_Cumulative_curve <<- function(){
+    print(gg_Cumulative_curve)
+  }
+
+  plot_gg_roc_curve <<- function(){
+    print(gg_roc_curve)
+  }
+
+  plot_gg_lift_curve <<- function(){
+    print(gg_lift_curve)
+  }
+
+  plot_grid <<- function(){
+    grid.arrange(gg_pr_Curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='Gradient Boosting Decision Trees')
+  }
+
   output$downloadReport <- downloadHandler(
     filename = function() {
-      paste('AdaboostReport', sep = '.', switch(
+      paste('GBMReport', sep = '.', switch(
         input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
       ))
     },
@@ -273,11 +287,17 @@ When you click the **Knit** button a document will be generated that includes bo
 summary(bst)
 ```
 ```{r,echo=T,prompt=T}
+#
 plot_gg_pr_Curve()
+
 plot_gg_Cumulative_curve()
+
 plot_gg_roc_curve()
+
 plot_gg_lift_curve()
+
 plot_grid()
+
 ```       ',file='GBMReport.Rmd',append=F)
 
       out <- render('GBMReport.Rmd', switch(
@@ -288,25 +308,7 @@ plot_grid()
     }
   )
 
-  plot_gg_pr_Curve <- function(){
-    print(gg_pr_Curve)
-  }
 
-  plot_gg_Cumulative_curve <- function(){
-    print(gg_Cumulative_curve)
-  }
-
-  plot_gg_roc_curve <- function(){
-    print(gg_roc_curve)
-  }
-
-  plot_gg_lift_curve <- function(){
-    print(gg_lift_curve)
-  }
-
-  plot_grid <- function(){
-    grid.arrange(gg_pr_Curve, gg_Cumulative_curve, gg_roc_curve, gg_lift_curve, ncol=2, nrow=2, widths=c(2,2), heights=c(2,2),main='Adaboost')
-  }
 
   output$downloadData1 = downloadHandler(
     filename = function() {
