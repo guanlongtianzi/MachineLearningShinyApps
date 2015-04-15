@@ -33,6 +33,10 @@ if(!require(knitr)) {
   install.packages(pkgs = 'knitr',quiet = TRUE)
   require(knitr)
 }
+if(!require(ROCR)) {
+  install.packages(pkgs = 'ROCR',quiet = TRUE)
+  require(ROCR)
+}
 runGitHub(username = 'guanlongtianzi',repo = 'MachineLearningShinyApps',subdir='Transductive-Support-Vector-Machine') 
 ```
 另外，因为调用了svm-light，github上传不方便，因此给个百度云盘的下载地址：http://pan.baidu.com/s/1tsR06，密码: b5gq。把TSVM这个文件夹放在shiny文件夹内部，即与ui.R、server.R、global.R同一个文件夹下。
