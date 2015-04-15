@@ -21,6 +21,10 @@ if(!require(ggplot2)) {
   install.packages(pkgs = 'ggplot2',quiet = TRUE)
   require(ggplot2)
 }
+if(!require(ROCR)) {
+  install.packages(pkgs = 'ROCR',quiet = TRUE)
+  require(ROCR)
+}
 runGitHub(username = 'guanlongtianzi',repo = 'MachineLearningShinyApps',subdir ='RandomForest') 
 ```
 各个参数的介绍如下：
