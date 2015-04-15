@@ -25,6 +25,10 @@ if(!require(ggplot2)) {
   install.packages(pkgs = 'ggplot2',quiet = TRUE)
   require(ggplot2)
 }
+if(!require(ROCR)) {
+  install.packages(pkgs = 'ROCR',quiet = TRUE)
+  require(ROCR)
+}
 runGitHub(username = 'guanlongtianzi',repo = 'MachineLearningShinyApps',subdir='Gradient-Boosting-Decision-Trees') 
 ```
 另外，可以通过如下的方法安装`xgboost`，代码如下
