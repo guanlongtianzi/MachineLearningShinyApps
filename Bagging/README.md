@@ -29,5 +29,9 @@ if(!require(knitr)) {
   install.packages(pkgs = 'knitr',quiet = TRUE)
   require(knitr)
 }
+if(!require(ROCR)) {
+  install.packages(pkgs = 'ROCR',quiet = TRUE)
+  require(ROCR)
+}
 runGitHub(username = 'guanlongtianzi',repo = 'MachineLearningShinyApps',subdir ='Bagging') 
 ```
